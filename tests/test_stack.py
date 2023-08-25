@@ -15,3 +15,15 @@ class TestStack(unittest.TestCase):
         self.assertEqual(self.stack.top.next_node.next_node.next_node,None)
         with self.assertRaises(AttributeError):
             self.stack.top.next_node.next_node.next_node.data
+
+    def test_pop(self):
+        self.stack = Stack()
+        self.stack.push('data1')
+        self.stack.push('data2')
+        self.stack.push('data3')
+        self.assertEqual(self.stack.pop(), 'data3')
+        self.assertEqual(self.stack.top.data, 'data2')
+        self.assertEqual(self.stack.pop(), 'data2')
+        self.assertEqual(self.stack.top.data, 'data1')
+        self.assertEqual(self.stack.pop(), 'data1')
+        self.assertEqual(self.stack.top, None)
