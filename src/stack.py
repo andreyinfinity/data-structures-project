@@ -17,6 +17,7 @@ class Stack:
         self.top = None
 
     def __str__(self):
+        """Метод возвращает все данные, находящиеся в стеке"""
         data_list = []
         node = self.top
         while node is not None:
@@ -39,6 +40,8 @@ class Stack:
 
         :return: данные удаленного элемента
         """
-        data = self.top.data
-        self.top = self.top.next_node
-        return data
+        if self.top is not None:
+            data = self.top.data
+            self.top = self.top.next_node
+            return data
+        return None
