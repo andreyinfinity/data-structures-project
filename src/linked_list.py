@@ -26,6 +26,30 @@ class LinkedList:
                 node = node.next_node
             node.next_node = new_node
 
+    def to_list(self) -> list:
+        """Возвращает список с данными, находящимися в узлах списка"""
+        list_nodes = []
+        node = self.head
+        if node is None:
+            return list_nodes
+        while node:
+            list_nodes.append(node.data)
+            node = node.next_node
+        return list_nodes
+
+    def get_data_by_id(self, id_value):
+        """Возвращает первый найденный словарь с ключом 'id', значение которого равно id_value """
+        node = self.head
+        if node is None:
+            return "Список пуст."
+        while node:
+            try:
+                if node.data['id'] == id_value:
+                    return node.data
+            except TypeError:
+                print("Данные не являются словарем или в словаре нет id.")
+            node = node.next_node
+
     def __str__(self) -> str:
         """Вывод данных односвязного списка в строковом представлении"""
         node = self.head
