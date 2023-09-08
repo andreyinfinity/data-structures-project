@@ -27,15 +27,19 @@ class TestQueue(unittest.TestCase):
         self.queue = Queue()
         self.assertEqual(self.queue.dequeue(), None)
         self.assertEqual(self.queue.head, None)
+        self.assertEqual(self.queue.tail, None)
         self.queue.enqueue('data1')
         self.queue.enqueue('data2')
         self.queue.enqueue('data3')
         self.assertEqual(self.queue.dequeue(), 'data1')
         self.assertEqual(self.queue.head.data, 'data2')
+        self.assertEqual(self.queue.tail.data, 'data3')
         self.assertEqual(self.queue.dequeue(), 'data2')
         self.assertEqual(self.queue.head.data, 'data3')
+        self.assertEqual(self.queue.tail.data, 'data3')
         self.assertEqual(self.queue.dequeue(), 'data3')
         self.assertEqual(self.queue.head, None)
+        self.assertEqual(self.queue.tail, None)
 
     def test_str(self):
         """Тест магического метода str."""
