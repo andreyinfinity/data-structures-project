@@ -11,6 +11,31 @@ class LinkedList:
     def __init__(self):
         self.head = None
 
+    def __len__(self) -> int:
+        """Возвращает количество элементов списка"""
+        n = 0
+        node = self.head
+        if node is None:
+            return n
+        while node:
+            n += 1
+            node = node.next_node
+        return n
+
+    def __getitem__(self, index: int):
+        """Возвращает данные по индексу"""
+        if not isinstance(index, int):
+            raise TypeError('Значение индекса должно быть целым числом')
+        elif index >= len(self) or index < 0:
+            raise IndexError('Значение индекса должно быть положительным и меньше длины списка ')
+        else:
+            n = 0
+            node = self.head
+            while n < index:
+                n += 1
+                node = node.next_node
+            return node.data
+
     def insert_beginning(self, data: dict) -> None:
         """Принимает данные (словарь) и добавляет узел с этими данными в начало связанного списка"""
         self.head = Node(data, self.head)
@@ -46,15 +71,20 @@ class LinkedList:
             try:
                 if node.data['id'] == id_value:
                     return node.data
-            except TypeError:
-                print("Данные не являются словарем или в словаре нет id.")
+            except TypeError as er:
+                print(f"{er.__class__.__name__}: Данные не являются словарем или в словаре нет id.")
+                return f"{er.__class__.__name__}: Данные не являются словарем или в словаре нет id."
+            except KeyError as er:
+                print(f"{er.__class__.__name__}: Данные не являются словарем или в словаре нет id.")
+                return f"{er.__class__.__name__}: Данные не являются словарем или в словаре нет id."
+
             node = node.next_node
 
     def __str__(self) -> str:
         """Вывод данных односвязного списка в строковом представлении"""
         node = self.head
         if node is None:
-            return str(None)
+            return "Список пуст."
 
         ll_string = ''
         while node:
