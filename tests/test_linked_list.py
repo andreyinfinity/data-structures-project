@@ -85,3 +85,68 @@ class TestLinkedList(unittest.TestCase):
         # Тест с пустым списком
         self.ll = LinkedList()
         self.assertEqual(str(self.ll), "Список пуст.")
+
+    def test_len(self):
+        """Тест магического метода str."""
+        self.ll = LinkedList()
+        self.ll.insert_beginning({'id': 1})
+        self.ll.insert_at_end({'id': 2})
+        self.ll.insert_at_end({'id': 3})
+        self.ll.insert_beginning({'id': 0})
+        self.assertEqual(len(self.ll), 4)
+        # Тест с пустым списком
+        self.ll = LinkedList()
+        self.assertEqual(len(self.ll), 0)
+
+    def test_getitem(self):
+        self.ll = LinkedList()
+        self.ll.insert_beginning({'id': 1})
+        self.ll.insert_at_end({'id': 2})
+        self.ll.insert_at_end({'id': 3})
+        self.ll.insert_beginning({'id': 0})
+        self.assertEqual(self.ll[0], {'id': 0})
+        self.assertEqual(self.ll[1], {'id': 1})
+        self.assertEqual(self.ll[2], {'id': 2})
+        self.assertEqual(self.ll[3], {'id': 3})
+        self.assertEqual(self.ll[-1], {'id': 3})
+        self.assertEqual(self.ll[-2], {'id': 2})
+        self.assertEqual(self.ll[-3], {'id': 1})
+        self.assertEqual(self.ll[-4], {'id': 0})
+        with self.assertRaises(IndexError):
+            self.ll[4]
+        with self.assertRaises(TypeError):
+            self.ll['3']
+
+    def test_setitem(self):
+        self.ll = LinkedList()
+        self.ll.insert_beginning({'id': 1})
+        self.ll.insert_at_end({'id': 2})
+        self.ll.insert_beginning({'id': 0})
+        self.ll[1] = {'new': 1}
+        self.assertEqual(self.ll[0], {'id': 0})
+        self.assertEqual(self.ll[1], {'new': 1})
+        self.assertEqual(self.ll[2], {'id': 1})
+        self.assertEqual(self.ll[3], {'id': 2})
+        with self.assertRaises(IndexError):
+            self.ll[5] = {'new': 1}
+        with self.assertRaises(TypeError):
+            self.ll['3'] = {'new': 1}
+
+    def test_delitem(self):
+        self.ll = LinkedList()
+        self.ll.insert_beginning({'id': 1})
+        self.ll.insert_at_end({'id': 2})
+        self.ll.insert_at_end({'id': 3})
+        self.ll.insert_beginning({'id': 0})
+        self.assertEqual(self.ll.to_list(), [{'id': 0}, {'id': 1}, {'id': 2}, {'id': 3}])
+        del self.ll[2]
+        self.assertEqual(self.ll.to_list(), [{'id': 0}, {'id': 1}, {'id': 3}])
+        del self.ll[0]
+        self.assertEqual(self.ll.to_list(), [{'id': 1}, {'id': 3}])
+        del self.ll[1]
+        self.assertEqual(self.ll.to_list(), [{'id': 1}])
+        with self.assertRaises(IndexError):
+            del self.ll[4]
+        with self.assertRaises(TypeError):
+            del self.ll['3']
+

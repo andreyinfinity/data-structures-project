@@ -23,11 +23,13 @@ class LinkedList:
         return n
 
     def __getitem__(self, index: int):
-        """Возвращает данные по индексу"""
+        """Возвращает данные из списка по индексу"""
         if not isinstance(index, int):
             raise TypeError('Значение индекса должно быть целым числом')
-        elif index >= len(self) or index < 0:
-            raise IndexError('Значение индекса должно быть положительным и меньше длины списка ')
+        elif index < 0:
+            index += len(self)
+        if index >= len(self) or index < 0:
+            raise IndexError('Значение индекса не должно превышать длину списка ')
         else:
             n = 0
             node = self.head
@@ -35,6 +37,49 @@ class LinkedList:
                 n += 1
                 node = node.next_node
             return node.data
+
+    def __setitem__(self, index: int, data):
+        """Добавляет данные в список по индексу. Если индекс отрицательный,
+        то отсчет идет от конца списка."""
+        if not isinstance(index, int):
+            raise TypeError('Значение индекса должно быть целым числом')
+        elif index < 0:
+            index += len(self)
+        if index > len(self) or index < 0:
+            raise IndexError('Значение индекса не должно превышать длину списка')
+        elif index == 0:
+            self.insert_beginning(data=data)
+        elif index == len(self):
+            self.insert_at_end(data=data)
+        else:
+            n = 0
+            node = self.head
+            while n < index:
+                n += 1
+                prev_node = node
+                node = node.next_node
+            new_node = Node(data=data, next_node=node)
+            prev_node.next_node = new_node
+
+    def __delitem__(self, index: int):
+        """Удаляет данные из списка по индексу. Если индекс отрицательный,
+        то отсчет идет от конца списка."""
+        if not isinstance(index, int):
+            raise TypeError('Значение индекса должно быть целым числом')
+        elif index < 0:
+            index += len(self)
+        if index > len(self) or index < 0:
+            raise IndexError('Значение индекса не должно превышать длину списка')
+        elif index == 0:
+            self.head = self.head.next_node
+        else:
+            n = 0
+            node = self.head
+            while n < index:
+                n += 1
+                prev_node = node
+                node = node.next_node
+            prev_node.next_node = node.next_node
 
     def insert_beginning(self, data: dict) -> None:
         """Принимает данные (словарь) и добавляет узел с этими данными в начало связанного списка"""
